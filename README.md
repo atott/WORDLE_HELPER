@@ -1,2 +1,2 @@
 # WORDLE_HELPER
-A short and simple code to help narrow down wordle choices whn playing WORDLE live. 
+A short and simple code to help narrow down WORDLE choices when playing WORDLE live. 
