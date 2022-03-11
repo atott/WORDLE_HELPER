@@ -42,6 +42,12 @@ function solve(word::String, color::String, words::Vector{String})
         m = [i for i in word[findall(i -> i == 'Y', color)] ]
         ws = words[vcat(([findall(contains(i), words) for i in m])...)]
 
+	for (i,j) in enumerate(color)
+           if j == 'Y'
+               ws = ws[setdiff(1:length(ws), findall(t -> t[i] == word[i], ws))]
+           end
+        end
+	
         n = [i for i in word[findall(i -> i == '?', color)] ]
         ws = ws[setdiff(1:length(ws), vcat(([findall(contains(i), ws) for i in n])...))]
 
