@@ -40,24 +40,31 @@ end
 ### Solve ####
 function solve(word::String, color::String, words::Vector{String})
         m = [i for i in word[findall(i -> i == 'Y', color)] ]
-        ws = words[vcat(([findall(contains(i), words) for i in m])...)]
 
-	for (i,j) in enumerate(color)
-           if j == 'Y'
-               ws = ws[setdiff(1:length(ws), findall(t -> t[i] == word[i], ws))]
-           end
+        if length(m) > 0
+                words = words[vcat(([findall(contains(i), words) for i in m])...)]
         end
-	
+
+        for (i,j) in enumerate(color)
+                if j == 'Y'
+                        words = words[setdiff(1:length(words), findall(t -> t[i] == word[i], words))]
+                end
+        end
+
         n = [i for i in word[findall(i -> i == '?', color)] ]
-        ws = ws[setdiff(1:length(ws), vcat(([findall(contains(i), ws) for i in n])...))]
 
         for (i,j) in enumerate(color)
            if j == 'G'
-               ws = ws[findall(t -> t[i] == word[i], ws)]
+               word[i] ∈ n ?  deleteat!(n, findall(t -> t==word[i], n)) : println("")
+               words = words[findall(t -> t[i] == word[i], words)]
            end
         end
 
-        return(ws)
+        if length(n) > 0
+                words = words[setdiff(1:length(words), vcat(([findall(contains(i), words) for i in n])...))]
+        end
+
+        return(words)
 end
 
 
@@ -65,8 +72,7 @@ counter = 0
 while counter < 5 
 	global counter = counter
 	global words = words
-	ws = solve(take_word_input(), take_color_input(), words)
-	words = filter!(i -> i ∈ words, ws)
+	words = solve(take_word_input(), take_color_input(), words)
 	counter += 1
 	
 	@show(words)
