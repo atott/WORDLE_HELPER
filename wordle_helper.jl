@@ -64,6 +64,8 @@ function solve(word::String, color::String, words::Vector{String})
                 words = words[setdiff(1:length(words), vcat(([findall(contains(i), words) for i in n])...))]
         end
 
+	unique!(words)		
+					
         return(words)
 end
 
